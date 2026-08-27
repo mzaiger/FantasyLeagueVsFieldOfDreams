@@ -2,7 +2,7 @@
 
 A browser-based 3D baseball game built from scratch with [Three.js](https://threejs.org/) — no game engine, no build step, just an `index.html` and vanilla JS modules. Step up to the plate as the **Fantasy League** against a roster of Field of Dreams legends, in either **Oracle Park** or a corn-ringed **Field of Dreams**.
 
-Powered by the **Lincoln Red Gauntlet engine** — a homegrown JS baseball sim covering pitching, hitting, fielding AI, base running, camera direction, and instant replay.
+Powered by the **Gauntlet engine** — a homegrown JS baseball sim covering pitching, hitting, fielding AI, base running, camera direction, and instant replay.
 
 ## Play
 
