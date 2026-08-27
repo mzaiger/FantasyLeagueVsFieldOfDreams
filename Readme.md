@@ -21,7 +21,7 @@ Open `index.html` in a modern browser (Chrome/Edge/Safari). No server or build s
 - **Fielding AI** — chase logic, cutoffs, backing up flies, infield creep during the windup, shifts, and race-the-runner throws to the bag.
 - **Base running** with full force/tag logic across all bases.
 - **Broadcast-style camera direction** — dedicated shots for at-bats, live ball tracking, and post-play framing, plus an **instant replay system** with a mid-replay angle cut.
-- **Two stadiums**: a classic V-bowl **Oracle Park**, and **Field of Dreams**, complete with a corn-outfield entrance sequence where both benches emerge from the corn before first pitch.
+- **Two stadiums**: a classic V-bowl **Oracle Park**, and **Field of Dreams**, complete with a corn-outfield entrance sequence where bench emerge from the corn before first pitch.
 - Animated crowd, scoreboard/videoboard, dynamic skyline, and ambient stadium audio.
 - FBX-rigged player models with skeleton-cloned instancing (see [Assets](#assets)) and a stylized geometric fallback when a model isn't present.
 
