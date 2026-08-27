@@ -77,9 +77,47 @@ The engine expects `.fbx` player/prop models in the project root (loaded via `lo
 - **Visiting team rig:** `Player1.fbx` (used for all Field of Dreams fielders), `Player2.fbx` (loaded, currently unused)
 - **Mitts:** `CatcherMit.fbx`, `RegularMit.fbx`
 
-Models are rigged through https://www.mixamo.com/.  To put in your own models, create character in 3d generator and then rig it through there.  Drop in.  Have not tested, and some of the models had issues and needed hard coded fixes for the specific model.  So might need to update code, when done.
+Models are rigged through [Mixamo](https://www.mixamo.com/). To use your own models: create a character with a 3D generator — e.g. [Tripo](https://www.tripo3d.ai/), [Meshy](https://www.meshy.ai/), or [Hunyuan3D](https://3d.hunyuan.tencent.com/) — export it, then rig it through Mixamo, then drop the exported `.fbx` into the project root. This hasn't been fully tested — some models had quirks (scale, foot grounding, etc.) that needed hardcoded fixes for that specific model, so expect to tweak `PlayerFactory.js` if a new rig behaves oddly.
 
 Models aren't tracked in this repo — drop your own `.fbx` files in the project root using the names above to enable them; anything missing just falls back to the built-in stylized model.
+
+### Renaming the home team (Fantasy League → your team)
+
+The home team's display name, abbreviation, and colors all come from one object — **`js/core/Constants.js`**, the `LIN` constant:
+
+```js
+export const LIN = { name:'Fantasy League', abbr:'LIN', primary:'#C8102E', secondary:'#ffffff', accent:'#2b2b2b' };
+```
+
+- `name` — full team name shown in the HUD, drawer, and welcome toast (e.g. "Fantasy League").
+- `abbr` — short scoreboard abbreviation (e.g. "LIN").
+- `primary` / `secondary` / `accent` — team colors used across the scorebug, scoreboard, crowd, and jerseys.
+
+Change these four values and the new name/colors propagate everywhere in the UI automatically — no other file needs updating for this part. (Note: internally the code refers to this team as "Lincoln"/`LIN` throughout comments and variable names — that's just the codebase's internal naming and isn't shown to players, so you don't need to touch it.)
+
+If you also want the page title and boot screen to reflect the new name, update the `<title>` tag and the park-picker labels in `index.html`.
+
+### Renaming Fantasy League players
+
+Player names aren't read from the `.fbx` filenames — they're defined in code, and the game just looks for an `.fbx` file that matches whatever name is in that code. To rename a player (or swap in your own fantasy league roster), you need to update **two places** so they stay in sync:
+
+1. **`js/core/Constants.js`** — the `NAMES` array. This is the actual roster; `RosterManager.js` shuffles these 11 names across all 11 positions (9 fielders + DH + Manager) every time the game loads.
+   ```js
+   export const NAMES = ['Hyle','Kevo','Doug','Dan','Paul','Ted','Scherz','Josh','Nate','Danny','Nick'];
+   ```
+2. **`js/entities/PlayerFactory.js`** — the `FBX_MANIFEST` set. This is a pre-check the loader runs before it even attempts to fetch a `.fbx` file; a name that isn't in this set skips straight to the stylized fallback model, even if a matching `.fbx` file actually exists in the project root.
+   ```js
+   const FBX_MANIFEST = new Set(['Hyle','Kevo','Doug','Dan','Paul','Ted','Scherz','Josh','Nate','Danny','Nick','Player1','Player2']);
+   ```
+
+Both lists must contain the same 11 names — if you rename `'Dan'` to `'Mike'` in `Constants.js` but forget the `FBX_MANIFEST` set, `Mike.fbx` will never load no matter what's in the project root.
+
+To fully customize the game to your own fantasy league:
+1. Update `LIN` in `Constants.js` — team name, abbreviation, and colors.
+2. Update the 11 names in `NAMES` (`Constants.js`) to your league's players.
+3. Update the same 11 names in `FBX_MANIFEST` (`PlayerFactory.js`).
+4. Generate a character per player with a tool like Tripo, Meshy, or Hunyuan3D, rig it through Mixamo, and export as `.fbx` — or skip this and let the stylized fallback render instead. Place each export in the project root named exactly `<Name>.fbx`, matching the names above.
+5. Optionally update `POSITIONS`, or the opposing roster (`oppFielders` in `RosterManager.js`) to further personalize the matchup.
 
 ## Tech
 
