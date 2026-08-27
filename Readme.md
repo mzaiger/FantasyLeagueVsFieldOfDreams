@@ -77,6 +77,8 @@ The engine expects `.fbx` player/prop models in the project root (loaded via `lo
 - **Visiting team rig:** `Player1.fbx` (used for all Field of Dreams fielders), `Player2.fbx` (loaded, currently unused)
 - **Mitts:** `CatcherMit.fbx`, `RegularMit.fbx`
 
+Models are rigged through https://www.mixamo.com/.  To put in your own models, create character in 3d generator and then rig it through https://www.mixamo.com/.  Drop in.  Have not tested, and some of the models had issues and needed hard coded fixes for the specific model.  So might need to update code, when done.
+
 Models aren't tracked in this repo — drop your own `.fbx` files in the project root using the names above to enable them; anything missing just falls back to the built-in stylized model.
 
 ## Tech
